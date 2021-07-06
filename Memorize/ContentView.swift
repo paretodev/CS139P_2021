@@ -3,7 +3,7 @@
 //  Memorize
 //
 //  Created by Dylan Han on 2021/06/20.
-//
+// View : draw what's in the model, trace-draw it
 
 import SwiftUI
 
@@ -24,7 +24,6 @@ struct ContentView: View {
         }
         .padding(.all)
     }
-    
 }
 
 //MARK- Types
