@@ -7,8 +7,10 @@
 
 import Foundation
 
-struct MemoryGame<CardContent> {
-    private(set) var cards : Array<Card>
+struct MemoryGame<CardContent> where CardContent: Equatable {
+    private(set) var cards: Array<Card>
+    
+    private var oneAndOnlyCardFaceUpIndex: Int?
 
     init(numberOfPairsOfCards: Int, createCardContent : (Int) -> CardContent){
         cards = Array<Card>()
@@ -24,16 +26,28 @@ struct MemoryGame<CardContent> {
     mutating func choose(_ card : MemoryGame.Card){
         if let chosenIndex = cards.firstIndex(where: {cardInArray in
             cardInArray.id == card.id
-        })
-        , !card.isFaceUp
-        , !card.isMatched{
-            //
-            
-            //
-            
-            //
-            
-            // 어떤 것이던 고른 카드는 toggle
+        }),
+        !card.isFaceUp,
+        !card.isMatched {
+            if let potentialMatchCardIndex = oneAndOnlyCardFaceUpIndex {
+                //일치
+                if cards[potentialMatchCardIndex].content == cards[chosenIndex].content {
+                    cards[potentialMatchCardIndex].isMatched = true
+                    cards[chosenIndex].isMatched = true
+                    
+                    oneAndOnlyCardFaceUpIndex = nil
+                }
+                
+                //불일치
+                else{
+                    for index in cards.indices {
+                        cards[index].isFaceUp = false
+                    }
+                    
+                    oneAndOnlyCardFaceUpIndex = nil
+                }
+            }
+
             cards[chosenIndex].isFaceUp.toggle()
         }
     }
