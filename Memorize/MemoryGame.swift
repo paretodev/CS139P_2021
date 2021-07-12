@@ -16,18 +16,33 @@ struct MemoryGame<CardContent> {
         for pairIndex in 0..<numberOfPairsOfCards {
             let content : CardContent = createCardContent( pairIndex )
             
-            cards.append( Card(isFaceUp: false, isMatched: false, content: content) )
-            cards.append( Card(isFaceUp: false, isMatched: false, content: content) )
+            cards.append( Card(isFaceUp: false, isMatched: false, content: content, id: pairIndex*2 ) )
+            cards.append( Card(isFaceUp: false, isMatched: false, content: content, id: pairIndex*2 + 1 ) )
         }
     }
     
-    func choose(_ card : MemoryGame.Card){
-        //...
+    mutating func choose(_ card : MemoryGame.Card){
+        if let chosenIndex = cards.firstIndex(where: {cardInArray in
+            cardInArray.id == card.id
+        })
+        , !card.isFaceUp
+        , !card.isMatched{
+            //
+            
+            //
+            
+            //
+            
+            // 어떤 것이던 고른 카드는 toggle
+            cards[chosenIndex].isFaceUp.toggle()
+        }
     }
 
-    struct Card {
+    struct Card: Identifiable {
         var isFaceUp : Bool
         var isMatched : Bool
-        var content : CardContent // image, jpeg
+        var content : CardContent
+        
+        var id: Int
     }
 }
