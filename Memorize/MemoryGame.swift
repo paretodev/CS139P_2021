@@ -23,12 +23,13 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
         }
     }
     
-    mutating func choose(_ card : MemoryGame.Card){
+    mutating func choose(_ card : MemoryGame<CardContent>.Card){
         if let chosenIndex = cards.firstIndex(where: {cardInArray in
             cardInArray.id == card.id
         }),
         !card.isFaceUp,
         !card.isMatched {
+            
             if let potentialMatchCardIndex = oneAndOnlyCardFaceUpIndex {
                 //일치
                 if cards[potentialMatchCardIndex].content == cards[chosenIndex].content {
