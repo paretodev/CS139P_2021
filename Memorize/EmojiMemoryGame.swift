@@ -27,4 +27,8 @@ class EmojiMemoryGame: ObservableObject {
     func choose(card: MemoryGame<String>.Card){
         model.choose(card)
     }
+    
+    var gameScore: Int {
+        model.gameScore
+    }
 }

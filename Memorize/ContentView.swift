@@ -24,6 +24,10 @@ struct ContentView: View {
                 }
                 .foregroundColor(.red)
             }
+            
+            Text("Score : \(viewModel.gameScore)")
+                .font(.title2)
+                .padding(.bottom)
         }
         .padding(.all)
     }

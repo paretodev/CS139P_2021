@@ -9,8 +9,10 @@ import Foundation
 
 struct MemoryGame<CardContent> where CardContent: Equatable {
     private(set) var cards: Array<Card>
-    
     private var oneAndOnlyCardFaceUpIndex: Int?
+    private var visitedIndicesHistory: Set<Int> = []
+    private(set) var gameScore = 0
+
 
     init(numberOfPairsOfCards: Int, createCardContent : (Int) -> CardContent){
         cards = Array<Card>()
@@ -29,27 +31,36 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
         }),
         !card.isFaceUp,
         !card.isMatched {
-            
             if let potentialMatchCardIndex = oneAndOnlyCardFaceUpIndex {
                 //일치
                 if cards[potentialMatchCardIndex].content == cards[chosenIndex].content {
                     cards[potentialMatchCardIndex].isMatched = true
                     cards[chosenIndex].isMatched = true
                     
-                    oneAndOnlyCardFaceUpIndex = nil
+                    gameScore += 2
                 }
-                
                 //불일치
                 else{
-                    for index in cards.indices {
-                        cards[index].isFaceUp = false
+                    if visitedIndicesHistory.contains(potentialMatchCardIndex) && visitedIndicesHistory.contains(chosenIndex){
+                        gameScore -= 2
                     }
-                    
-                    oneAndOnlyCardFaceUpIndex = nil
                 }
+                
+                //일치 + 불일치
+                oneAndOnlyCardFaceUpIndex = nil
             }
-
+            
+            else{
+                for index in cards.indices {
+                    cards[index].isFaceUp = false
+                }
+                oneAndOnlyCardFaceUpIndex = chosenIndex
+            }
+            
+            //MARK:- At the end, toggle !!
             cards[chosenIndex].isFaceUp.toggle()
+            
+            visitedIndicesHistory.insert(chosenIndex)
         }
     }
 
