@@ -9,12 +9,6 @@ import SwiftUI
 
 struct ContentView: View {
     @ObservedObject var viewModel : EmojiMemoryGame
-//property wrapper requires prop. to be "var"
-    
-    // <= injected
-    // when viewmodel says "sth changes"
-    // Rebuild entire var body
-    
     var body: some View {
         ScrollView{
             LazyVGrid( columns: [ GridItem( .adaptive(minimum: 65.0) ) ] ) {
@@ -31,7 +25,6 @@ struct ContentView: View {
     }
 }
 
-//MARK- Types
 struct CardView : View {
     let card : MemoryGame<String>.Card
     
@@ -53,8 +46,6 @@ struct CardView : View {
         }
     }
 }
-
-
 
 //MARK:- Preview
 struct ContentView_Previews: PreviewProvider {

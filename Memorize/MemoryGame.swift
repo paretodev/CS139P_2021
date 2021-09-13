@@ -8,10 +8,9 @@
 import Foundation
 
 struct MemoryGame<CardContent> where CardContent: Equatable{
-    // I don't care but it at least gotta behave like sth
     private(set) var cards : Array<Card>
     
-    private var indexOfTheOneAndOnlyFaceUpCard: Int? // .none, .some<Int>
+    private var indexOfTheOneAndOnlyFaceUpCard: Int?
 
     init(numberOfPairsOfCards: Int, createCardContent : (Int) -> CardContent){
         cards = Array<Card>()
@@ -51,12 +50,10 @@ struct MemoryGame<CardContent> where CardContent: Equatable{
         print("model's cards array : \n\(cards)")
     }
     
-
-    //MemoryGame.Card
     struct Card: Identifiable {
         var isFaceUp : Bool = false
         var isMatched : Bool = false
-        var content : CardContent // image, jpeg
-        var id: Int // don't care type, hashable + equatable
+        var content : CardContent
+        var id: Int
     }
 }
