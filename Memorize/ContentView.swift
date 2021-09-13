@@ -3,17 +3,10 @@
 //  Memorize
 //
 //  Created by Dylan Han on 2021/06/20.
-// View : draw what's in the model, trace-draw it
-
 import SwiftUI
 
 struct ContentView: View {
     @ObservedObject var viewModel : EmojiMemoryGame
-//property wrapper requires prop. to be "var"
-    
-    // <= injected
-    // when viewmodel says "sth changes"
-    // Rebuild entire var body
     
     var body: some View {
         ScrollView{
@@ -31,7 +24,6 @@ struct ContentView: View {
     }
 }
 
-//MARK- Types
 struct CardView : View {
     let card : MemoryGame<String>.Card
     
@@ -53,8 +45,6 @@ struct CardView : View {
         }
     }
 }
-
-
 
 //MARK:- Preview
 struct ContentView_Previews: PreviewProvider {
