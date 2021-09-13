@@ -9,15 +9,12 @@ import Foundation
 
 struct MemoryGame<CardContent> where CardContent: Equatable{
     private(set) var cards : Array<Card>
-    
     private var indexOfTheOneAndOnlyFaceUpCard: Int?
 
     init(numberOfPairsOfCards: Int, createCardContent : (Int) -> CardContent){
         cards = Array<Card>()
-        
         for pairIndex in 0..<numberOfPairsOfCards {
             let content : CardContent = createCardContent( pairIndex )
-            
             cards.append( Card(isFaceUp: false, isMatched: false, content: content, id: pairIndex*2) )
             cards.append( Card(isFaceUp: false, isMatched: false, content: content, id: pairIndex*2+1) )
         }

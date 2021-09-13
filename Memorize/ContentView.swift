@@ -3,12 +3,11 @@
 //  Memorize
 //
 //  Created by Dylan Han on 2021/06/20.
-// View : draw what's in the model, trace-draw it
-
 import SwiftUI
 
 struct ContentView: View {
     @ObservedObject var viewModel : EmojiMemoryGame
+    
     var body: some View {
         ScrollView{
             LazyVGrid( columns: [ GridItem( .adaptive(minimum: 65.0) ) ] ) {
