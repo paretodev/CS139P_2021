@@ -10,7 +10,7 @@ struct ContentView: View {
     
     var body: some View {
         ScrollView{
-            LazyVGrid( columns: [ GridItem( .adaptive(minimum: 65.0) ) ] ) {
+            LazyVGrid( columns: [ GridItem( .adaptive(minimum: 70.0) ) ] ) {
                 ForEach( viewModel.model.cards ) { card in
                     CardView(card: card)
                         .aspectRatio(2/3, contentMode : .fit)
@@ -28,23 +28,39 @@ struct CardView : View {
     let card : MemoryGame<String>.Card
     
     var body : some View {
-        ZStack {
-            let shape = RoundedRectangle(cornerRadius: 20.0)
-            
-            if card.isFaceUp {
-                shape.fill().foregroundColor(.white)
-                shape.strokeBorder(lineWidth: 3.0).foregroundColor(/*@START_MENU_TOKEN@*/.red/*@END_MENU_TOKEN@*/)
+        //Keep this UI-declaritive code to be as "clean" as possible.
+        GeometryReader { geometry in
+            ZStack {
+                let shape = RoundedRectangle(cornerRadius: CardDrawConstants.cornerRadius)
                 
-                Text(card.content).font(.largeTitle)
-            } else if card.isMatched {
-                shape.opacity(0)
-            }
-            else{
-                shape.fill().foregroundColor(.red)
+                if card.isFaceUp {
+                    shape.fill().foregroundColor(.white)
+                    shape.strokeBorder(lineWidth: CardDrawConstants.lineWidth).foregroundColor(/*@START_MENU_TOKEN@*/.red/*@END_MENU_TOKEN@*/)
+                    Text(card.content).font(customFont(in: geometry.size)) // 1 liner clean code !
+                } else if card.isMatched {
+                    shape.opacity(0)
+                }
+                else{
+                    shape.fill().foregroundColor(.red)
+                }
             }
         }
     }
+
+    //CardView : funcs and consts
+    private func customFont(in size: CGSize) -> Font {
+        Font.system(size: min( size.width ,size.height) * CardDrawConstants.fontScale
+        )
+    }
+    
+    private struct CardDrawConstants {
+        static let cornerRadius: CGFloat = 20.0
+        static let lineWidth: CGFloat  = 3.0
+        static let fontScale: CGFloat  = 0.8
+    }
 }
+
+
 
 //MARK:- Preview
 struct ContentView_Previews: PreviewProvider {
